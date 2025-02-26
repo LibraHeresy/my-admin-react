@@ -1,14 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import { lazy } from "react";
+import myRoutes from './routes.js'
 
-const App = lazy(() => import("./App"));
-
-const routes = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    children: [],
-  },
-]);
+const routes = createBrowserRouter(myRoutes);
 
 export default routes;

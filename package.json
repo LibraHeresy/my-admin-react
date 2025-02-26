@@ -1,5 +1,5 @@
 {
-  "name": "my-react-app",
+  "name": "my-admin-react",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,8 +12,8 @@
   "dependencies": {
     "antd": "^5.24.2",
     "axios": "^1.7.9",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-router-dom": "^7.2.0",
     "zustand": "^5.0.3"
   },
@@ -27,6 +27,8 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
+    "less": "^4.2.2",
+    "less-loader": "^12.2.0",
     "vite": "^6.2.0"
   }
 }
