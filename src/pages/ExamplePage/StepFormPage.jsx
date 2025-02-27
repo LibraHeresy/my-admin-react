@@ -1,5 +1,5 @@
-const Workbench = () => {
-  return <div>Workbench</div>;
+const App = () => {
+  return <div></div>;
 };
 
-export default Workbench;
+export default App;

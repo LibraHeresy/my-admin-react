@@ -1,3 +1,5 @@
+import "./Workbench.less"
+
 const Workbench = () => {
   return <div>Workbench</div>;
 };

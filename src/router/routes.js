@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import Workbenches from "./module/workbenches.js";
+import Workbenches from "./module/workbench.js";
 import ExceptionPage from "./module/exception-page.js";
 import ExamplePage from "./module/example-page.js";
 import Setting from "./module/setting.js";

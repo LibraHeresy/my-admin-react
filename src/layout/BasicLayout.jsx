@@ -1,36 +1,37 @@
 import React, { useState } from "react";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-} from "@ant-design/icons";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
 const { Header, Sider, Content } = Layout;
 import "./BasicLayout.less";
 import Logo from "@/assets/react.svg";
-import myRoutes from '@/router/routes'
+import myRoutes from "@/router/routes";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 
-const BasicLayout = () => {
+const App = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer },
   } = theme.useToken();
   const getMenus = (routes) => {
-    return routes.map((item) => {
-      if(item.hideInMenu) return false;
-      let menu = {
-        key: item.path,
-        icon: item.icon?.render() || '',
-        label: item.name,
-      }
-      if(item.children) {
-        menu.children = getMenus(item.children)
-      }
-      return menu;
-    }).filter(item => item);
+    return routes
+      .map((item) => {
+        if (item.hideInMenu) return false;
+        let menu = {
+          key: item.path,
+          icon: item.icon?.render() || "",
+          label: item.name,
+        };
+        if (item.children) {
+          menu.children = getMenus(item.children);
+        }
+        return menu;
+      })
+      .filter((item) => item);
   };
 
-  const menus = getMenus(myRoutes.find(item => item.path === '/')?.children || []);
+  const menus = getMenus(
+    myRoutes.find((item) => item.path === "/")?.children || []
+  );
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -91,19 +92,13 @@ const BasicLayout = () => {
             }}
           />
         </Header>
-        <Content
-          style={{
-            margin: "24px 16px",
-            padding: 24,
-            minHeight: 280,
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
-          }}
-        >
-          <Outlet />
+        <Content className="ant-layout-content">
+          <div className="content-wrapper">
+            <Outlet />
+          </div>
         </Content>
       </Layout>
     </Layout>
   );
 };
-export default BasicLayout;
+export default App;

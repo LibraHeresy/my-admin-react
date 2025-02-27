@@ -31,16 +31,12 @@ const LoginForm = () => {
 
   // 用户登录
   const onFinish = async (ruleForm) => {
-    try {
-      if (ruleForm.account === "admin" && ruleForm.password === "123456") {
-        message.success("登录成功");
-        localStorage.setItem("token", "token");
-        navigate("/");
-      } else {
-        message.error("账号或密码错误");
-      }
-    } catch (error) {
-      message.error(error.message);
+    if (ruleForm.account === "admin" && ruleForm.password === "123456") {
+      message.success("登录成功");
+      localStorage.setItem("token", "token");
+      navigate("/");
+    } else {
+      message.error("账号或密码错误");
     }
   };
   const onFinishFailed = (error) => {
