@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -8,14 +8,13 @@ const { Header, Sider, Content } = Layout;
 import "./BasicLayout.less";
 import Logo from "@/assets/react.svg";
 import myRoutes from '@/router/routes'
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 
 const BasicLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-
-  console.log(myRoutes)
   const getMenus = (routes) => {
     return routes.map((item) => {
       if(item.hideInMenu) return false;
@@ -31,7 +30,20 @@ const BasicLayout = () => {
     }).filter(item => item);
   };
 
-  const menus = getMenus(myRoutes);
+  const menus = getMenus(myRoutes.find(item => item.path === '/')?.children || []);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleMenuClick = (e) => {
+    navigate(e.key);
+  };
+
+  React.useEffect(() => {
+    if (location.pathname === "/") {
+      navigate("/workbench", { replace: true });
+    }
+  }, [location, navigate]);
 
   return (
     <Layout className="basic-layout">
@@ -52,8 +64,9 @@ const BasicLayout = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={[location.pathname]}
           items={menus}
+          onClick={handleMenuClick}
         />
       </Sider>
       <Layout
@@ -87,7 +100,7 @@ const BasicLayout = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          Content
+          <Outlet />
         </Content>
       </Layout>
     </Layout>

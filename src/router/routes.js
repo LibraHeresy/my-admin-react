@@ -1,5 +1,8 @@
 import { lazy } from "react";
-import { DesktopOutlined } from "@ant-design/icons";
+import Workbenches from "./module/workbenches.js";
+import ExceptionPage from "./module/exception-page.js";
+import ExamplePage from "./module/example-page.js";
+import Setting from "./module/setting.js";
 
 const routes = [
   {
@@ -10,8 +13,13 @@ const routes = [
   {
     path: "/",
     name: "首页",
-    icon: DesktopOutlined,
     Component: lazy(() => import("../layout/BasicLayout.jsx")),
+    children: [
+      ...Workbenches,
+      ...ExamplePage,
+      ...ExceptionPage,
+      ...Setting,
+    ],
   },
 ];
 

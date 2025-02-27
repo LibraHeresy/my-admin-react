@@ -1,6 +1,6 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createHashRouter } from "react-router-dom";
 import myRoutes from './routes.js'
 
-const routes = createBrowserRouter(myRoutes);
+const routes = createHashRouter(myRoutes);
 
 export default routes;
