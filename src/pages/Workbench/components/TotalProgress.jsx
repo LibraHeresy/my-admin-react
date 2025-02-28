@@ -1,4 +1,4 @@
-import MyCard from "./MyCard";
+import MyCard from "./MyCard.jsx";
 import { Progress } from "antd";
 import PropTypes from "prop-types";
 

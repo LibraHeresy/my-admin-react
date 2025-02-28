@@ -21,6 +21,11 @@ const routes = [
       ...Setting,
     ],
   },
+  {
+    path: "*",
+    hideInMenu: true,
+    Component: lazy(() => import("../pages/ExceptionPage/NotFound.jsx")),
+  }
 ];
 
 export default routes;

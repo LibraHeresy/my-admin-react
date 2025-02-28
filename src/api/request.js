@@ -1,5 +1,5 @@
 import axios from "axios";
-import notification from "ant-design-vue/es/notification";
+import { notification } from 'antd';
 
 // 创建 axios 实例
 const request = axios.create({

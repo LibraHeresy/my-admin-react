@@ -5,7 +5,7 @@ const userApi = {
   GetWorkbenchesData: "/api/workbench/getData",
 };
 
-export function getWorkbenchesData(parameter) {
+export function getWorkbenchData(parameter) {
   return request({
     url: userApi.GetWorkbenchesData,
     method: "get",

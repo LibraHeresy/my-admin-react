@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import SalesData from "./SalesData";
 import VisitsData from "./VisitsData";
 import moment from "moment";
@@ -36,28 +36,28 @@ const dateList = [
   },
 ];
 
-const App = () => {
+const SalesDataCard = () => {
   const [dateRange, setDateRange] = useState(["", ""]);
   const [tab, setTab] = useState("sales");
   const refSalesData = useRef(null);
   const refVisitsData = useRef(null);
 
+  useEffect(() => {
+    if (tab === "sales" && refSalesData.current) {
+      refSalesData.current.renderChart();
+    } else if (tab === "visits" && refVisitsData.current) {
+      refVisitsData.current.renderChart();
+    }
+  }, [tab]);
+
   const onTabChange = (key) => {
     setTab(key);
-
-    setTimeout(() => {
-      if (key === "sales" && refSalesData.current) {
-        refSalesData.current.renderChart();
-      } else if (key === "visits" && refVisitsData.current) {
-        refVisitsData.current.renderChart();
-      }
-    });
   };
 
   const handleDateClick = (key) => {
-    setDateRange([dateRange[0], moment().format(dateFormat)]);
-
+    const endTime = moment().format(dateFormat);
     let startTime = "";
+
     switch (key) {
       case "前6月":
         startTime = moment().subtract(6, "months").format(dateFormat);
@@ -74,7 +74,7 @@ const App = () => {
       default:
         break;
     }
-    setDateRange([startTime, dateRange[1]]);
+    setDateRange([startTime, endTime]);
   };
 
   return (
@@ -82,7 +82,7 @@ const App = () => {
       style={{ width: "100%", borderRadius: "10px" }}
       tabList={tabList}
       activeTabKey={tab}
-      onTabChange={(key) => onTabChange(key)}
+      onTabChange={onTabChange}
       tabBarExtraContent={
         <>
           {dateList.map((item) => (
@@ -105,4 +105,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default SalesDataCard;

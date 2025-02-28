@@ -1,4 +1,4 @@
-import MyCard from "./MyCard";
+import MyCard from "./MyCard.jsx";
 import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons";
