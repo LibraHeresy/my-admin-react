@@ -56,8 +56,14 @@ const BasicLayout = () => {
   };
 
   useEffect(() => {
-    if (location.pathname === "/") {
-      navigate("/workbench", { replace: true });
+    if (location !== "/login") {
+      let token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/login", { replace: true });
+      }
+      if (location.pathname === "/") {
+        navigate("/workbench", { replace: true });
+      }
     }
   }, [location, navigate]);
 
