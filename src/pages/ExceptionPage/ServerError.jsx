@@ -12,7 +12,7 @@ const App = () => {
       variant="borderless"
     >
       <Result
-        class="my-body"
+        className="my-body"
         status="500"
         title="500"
         subTitle="Sorry, the server is wrong."

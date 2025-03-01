@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import SalesData from "./SalesData";
 import VisitsData from "./VisitsData";
 import moment from "moment";
-import { Card, DatePicker } from "antd";
+import { Card, DatePicker, Button } from "antd";
 
 const { RangePicker } = DatePicker;
 
@@ -55,21 +55,21 @@ const SalesDataCard = () => {
   };
 
   const handleDateClick = (key) => {
-    const endTime = moment().format(dateFormat);
+    const endTime = moment();
     let startTime = "";
 
     switch (key) {
       case "前6月":
-        startTime = moment().subtract(6, "months").format(dateFormat);
+        startTime = moment().subtract(6, "months");
         break;
       case "前3月":
-        startTime = moment().subtract(3, "months").format(dateFormat);
+        startTime = moment().subtract(3, "months");
         break;
       case "前30天":
-        startTime = moment().subtract(30, "days").format(dateFormat);
+        startTime = moment().subtract(30, "days");
         break;
       case "前7天":
-        startTime = moment().subtract(7, "days").format(dateFormat);
+        startTime = moment().subtract(7, "days");
         break;
       default:
         break;
@@ -86,16 +86,19 @@ const SalesDataCard = () => {
       tabBarExtraContent={
         <>
           {dateList.map((item) => (
-            <a
+            <Button
+              type="link"
               key={item.key}
-              style={{ marginRight: "20px" }}
-              href="#"
               onClick={() => handleDateClick(item.key)}
             >
               {item.value}
-            </a>
+            </Button>
           ))}
-          <RangePicker value={dateRange} format={dateFormat} />
+          <RangePicker
+            value={dateRange}
+            format={dateFormat}
+            onChange={(dates) => setDateRange(dates)}
+          />
         </>
       }
     >

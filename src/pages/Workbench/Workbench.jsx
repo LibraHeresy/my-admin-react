@@ -25,14 +25,14 @@ class CreateInfo {
     // 今日访客数
     this.todayVistors = 93036;
     // 7天访客数
-    this.past7daysVisitors = [
-      { visitors: 85738 },
-      { visitors: 11710 },
-      { visitors: 19806 },
-      { visitors: 57725 },
-      { visitors: 60947 },
-      { visitors: 65521 },
-      { visitors: 18719 },
+    this.past7daysVistors = [
+      { vistors: 85738 },
+      { vistors: 11710 },
+      { vistors: 19806 },
+      { vistors: 57725 },
+      { vistors: 60947 },
+      { vistors: 65521 },
+      { vistors: 18719 },
     ];
     // 总订单数
     this.totalOrders = 36394641;
@@ -62,21 +62,30 @@ const App = () => {
   const refTotalOrders = useRef(null);
 
   useEffect(() => {
-    getWorkbenchData({}).then((res) => {
-      if (res.code === 200) {
-        setInfo(res.data);
-      }
-    }).finally(() => {
-      setIsLoading(false);
-    });
+    getWorkbenchData({})
+      .then((res) => {
+        if (res.code === 200) {
+          setInfo(res.data);
+        }
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1500);
+      });
   }, []);
 
   useEffect(() => {
-    if (refTotalVistors.current && refTotalOrders.current) {
+    if (refTotalVistors.current) {
       refTotalVistors.current.renderChart();
+    }
+  }, [info.past7daysVistors, isLoading]);
+
+  useEffect(() => {
+    if (refTotalOrders.current) {
       refTotalOrders.current.renderChart();
     }
-  }, [info]);
+  }, [info.past7daysOrders, isLoading]);
 
   return (
     <>
@@ -114,17 +123,31 @@ const App = () => {
       {!isLoading && (
         <div className="my-workbench">
           <div className="desc-cards">
-            <TotalSales className="desc-card" info={info} />
-            <TotalVistors ref={refTotalVistors} className="desc-card" info={info} />
-            <TotalOrders ref={refTotalOrders} className="desc-card" info={info} />
-            <TotalProgress className="desc-card" info={info} />
+            <div className="desc-card">
+              <TotalSales info={info} />
+            </div>
+            <div className="desc-card">
+              <TotalVistors ref={refTotalVistors} info={info} />
+            </div>
+            <div className="desc-card">
+              <TotalOrders ref={refTotalOrders} info={info} />
+            </div>
+            <div className="desc-card">
+              <TotalProgress info={info} />
+            </div>
           </div>
 
-          <SalesDataCard className="sales-data-card" />
+          <div className="sales-data-card">
+            <SalesDataCard />
+          </div>
 
           <div className="info-cards">
-            <OnlineTopSearch className="info-card" />
-            <ProportionOfSales className="info-card" />
+            <div className="info-card">
+              <OnlineTopSearch />
+            </div>
+            <div className="info-card">
+              <ProportionOfSales />
+            </div>
           </div>
         </div>
       )}

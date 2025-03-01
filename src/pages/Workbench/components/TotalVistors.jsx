@@ -5,7 +5,7 @@ import { UniversalTransition } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
 echarts.use([GridComponent, LineChart, CanvasRenderer, UniversalTransition]);
 
-import "./VisitsData.less";
+import "./TotalVistors.less";
 import moment from "moment";
 import MyCard from "./MyCard.jsx";
 import React, { useEffect, useRef } from "react";
@@ -55,7 +55,7 @@ const chartOption = {
   ],
 };
 
-const App = ({ info, ref }) => {
+const App = React.forwardRef(({ info = {} }, ref) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -68,11 +68,11 @@ const App = ({ info, ref }) => {
 
   const renderChart = () => {
     if (!chartRef.current) {
-      const chartDom = document.getElementById("total-visitors-chart");
+      const chartDom = document.getElementById("total-vistors-chart");
       chartRef.current = echarts.init(chartDom);
     }
     chartOption.series[0].data =
-      info?.past7daysVisitors.map((item) => item.visitors) || [];
+      info?.past7daysVistors.map((item) => item.vistors) || [];
     chartRef.current.setOption(chartOption);
   };
 
@@ -83,22 +83,18 @@ const App = ({ info, ref }) => {
   return (
     <MyCard
       title="总访客数"
-      numberSlot={<span>{info.TotalVistors.toLocaleString()}</span>}
-      descSlot={<span>每日访客数 {info.todayVistors.toLocaleString()}</span>}
+      numberSlot={<span>{info.totalVistors?.toLocaleString()}</span>}
+      descSlot={<span>每日访客数 {info.todayVistors?.toLocaleString()}</span>}
     >
-      <div id="total-visitors-chart" className="total-visitors-chart"></div>
+      <div id="total-vistors-chart" className="total-vistors-chart"></div>
     </MyCard>
   );
-};
+});
+
+App.displayName = "TotalVistors";
 
 App.propTypes = {
   info: PropTypes.object,
-  ref: PropTypes.object,
-};
-
-App.defaultProps = {
-  info: {},
-  ref: null,
 };
 
 export default App;

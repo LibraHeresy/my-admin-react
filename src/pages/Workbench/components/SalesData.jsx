@@ -6,7 +6,6 @@ echarts.use([GridComponent, BarChart, CanvasRenderer, TooltipComponent]);
 
 import React, { useRef, useEffect } from "react";
 import "./SalesData.less";
-import PropTypes from "prop-types";
 
 const chartOption = {
   tooltip: {
@@ -48,7 +47,7 @@ const chartOption = {
     },
   ],
 };
-const App = ({ref}, ) => {
+const App = React.forwardRef((_, ref) => {
   const chartRef = useRef(null);
 
   const renderChart = () => {
@@ -80,14 +79,8 @@ const App = ({ref}, ) => {
       </div>
     </div>
   );
-};
+});
 
-App.propTypes = {
-  ref: PropTypes.object,
-};
-
-App.defaultProps = {
-  ref: null,
-};
+App.displayName = "SalesData";
 
 export default App;

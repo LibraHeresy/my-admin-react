@@ -12,7 +12,7 @@ const App = () => {
       variant="borderless"
     >
       <Result
-        class="my-body"
+        className="my-body"
         status="403"
         title="403"
         subTitle="Sorry, you are not authorized to access this page."

@@ -3,10 +3,10 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
 import "./MyCard.less";
 const App = ({
-  title,
-  number,
-  desc,
-  introduce,
+  title = "这是标题",
+  number = "0",
+  desc = "这是描述",
+  introduce = "这是介绍",
   children,
   numberSlot,
   descSlot,
@@ -16,7 +16,7 @@ const App = ({
       <div className="my-card_header">
         <div className="my-card_header-title">{title}</div>
         <Tooltip title={introduce}>
-          <InfoCircleOutlined class="my-card_header-icon" />
+          <InfoCircleOutlined className="my-card_header-icon" />
         </Tooltip>
       </div>
       <div className="my-card_content">
@@ -40,13 +40,6 @@ App.propTypes = {
   children: PropTypes.node,
   numberSlot: PropTypes.node,
   descSlot: PropTypes.node,
-};
-
-App.defaultProps = {
-  title: "这是标题",
-  number: "0",
-  desc: "这是描述",
-  introduce: "这是介绍",
 };
 
 export default App;

@@ -10,9 +10,9 @@ Mock.mock("/api/workbench/getData", "get", {
     "salesDecreasePrecent|0-2000": 1,
     "totalVistors|100000-1000000": 1,
     "todayVistors|10000-100000": 1,
-    "past7daysVisitors|7": [
+    "past7daysVistors|7": [
       {
-        "visitors|10000-100000": 1,
+        "vistors|10000-100000": 1,
       },
     ],
     "totalOrders|10000000-100000000": 1,

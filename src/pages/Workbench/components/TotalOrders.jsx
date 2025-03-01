@@ -51,7 +51,7 @@ const chartOption = {
   ],
 };
 
-const App = ({ info, ref }) => {
+const App = React.forwardRef(({ info = {} }, ref) => {
   const chartRef = useRef(null);
 
   const renderChart = () => {
@@ -80,22 +80,18 @@ const App = ({ info, ref }) => {
   return (
     <MyCard
       title="总订单数"
-      numberSlot={<span>{info.totalOrders.toLocaleString()}</span>}
-      descSlot={<span>每日订单数 {info.todayOrders.toLocaleString()}</span>}
+      numberSlot={<span>{info.totalOrders?.toLocaleString()}</span>}
+      descSlot={<span>每日订单数 {info.todayOrders?.toLocaleString()}</span>}
     >
       <div id="total-orders-chart" className="total-orders-chart"></div>
     </MyCard>
   );
-};
+});
+
+App.displayName = "TotalOrders";
 
 App.propTypes = {
   info: PropTypes.object,
-  ref: PropTypes.object,
-};
-
-App.defaultProps = {
-  info: {},
-  ref: null,
 };
 
 export default App;
