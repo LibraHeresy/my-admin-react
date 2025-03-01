@@ -140,15 +140,9 @@ const PersonInfo = () => {
         )}
         {!isEdit && (
           <>
-            <Form.Item label="昵称" name="nickname">
-              {info.nickname}
-            </Form.Item>
-            <Form.Item label="个人简介" name="profile">
-              {info.profile}
-            </Form.Item>
-            <Form.Item label="邮箱" name="email">
-              {info.email}
-            </Form.Item>
+            <Form.Item label="昵称">{info.nickname}</Form.Item>
+            <Form.Item label="个人简介">{info.profile}</Form.Item>
+            <Form.Item label="邮箱">{info.email}</Form.Item>
             <Form.Item label={null}>
               <Button type="primary" onClick={toEdit}>
                 修改

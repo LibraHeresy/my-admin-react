@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
   GlobalOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu, Dropdown } from "antd";
+import { Button, Layout, Menu, Dropdown, Breadcrumb } from "antd";
 const { Header, Sider, Content } = Layout;
 import "./BasicLayout.less";
 import Logo from "@/assets/react.svg";
@@ -18,39 +18,62 @@ const BasicLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const themeStore = useStore();
   const { t, i18n } = useTranslation();
-  const getMenus = (routes) => {
-    return routes
-      .map((item) => {
-        if (item.hideInMenu) return false;
-        let menu = {
-          key: item.path,
-          icon: item.icon?.render() || "",
-          label: item.i18n ? t(item.i18n) : item.name,
-        };
-        if (item.children) {
-          menu.children = getMenus(item.children);
-        }
-        return menu;
-      })
-      .filter((item) => item);
-  };
-
-  const menus = getMenus(
-    myRoutes.find((item) => item.path === "/")?.children || []
-  );
-
+  const [breadcrumbs, setBreadcrumbs] = useState([t("home")]);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // 使用 useMemo 初始化 menusMap
+  const menusMap = useMemo(() => ({}), []);
+
+  const getMenus = useCallback(
+    (routes) => {
+      return routes
+        .map((item) => {
+          if (item.hideInMenu) return false;
+          let menu = {
+            key: item.path,
+            icon: item.icon?.render() || "",
+            label: item.i18n ? t(item.i18n) : item.name,
+          };
+          menusMap[menu.key] = menu.label;
+          if (item.children) {
+            menu.children = getMenus(item.children);
+          }
+          return menu;
+        })
+        .filter((item) => item);
+    },
+    [t, menusMap]
+  );
+
+  const menus = useMemo(
+    () => getMenus(myRoutes.find((item) => item.path === "/")?.children || []),
+    [getMenus]
+  );
 
   const handleMenuClick = (e) => {
     navigate(e.key);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (location.pathname === "/") {
       navigate("/workbench", { replace: true });
     }
   }, [location, navigate]);
+
+  useEffect(() => {
+    const pathnames = location.pathname.split("/").filter((x) => x);
+    let breadcrumbNames = pathnames
+      .map((_, index) => {
+        const key = `/${pathnames.slice(0, index + 1).join("/")}`;
+        return menusMap[key];
+      })
+      .filter((x) => x);
+    if (breadcrumbNames.length === 1) {
+      breadcrumbNames.unshift(t("home"));
+    }
+    setBreadcrumbs(breadcrumbNames);
+  }, [location, menusMap, t]);
 
   const handleChangeLanguage = (val) => {
     themeStore.setLocalLanguage(val);
@@ -87,7 +110,7 @@ const BasicLayout = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={[location.pathname]}
+          selectedKeys={[location.pathname]}
           items={menus}
           onClick={handleMenuClick}
         />
@@ -177,6 +200,18 @@ const BasicLayout = () => {
           </div>
         </Header>
         <Content className="ant-layout-content">
+          <div className="content-header">
+            <Breadcrumb
+              items={
+                breadcrumbs.length > 0 &&
+                breadcrumbs.map((title, index) => ({
+                  key: index,
+                  title: title,
+                }))
+              }
+            ></Breadcrumb>
+            {breadcrumbs[breadcrumbs.length - 1] || ""}
+          </div>
           <div className="content-wrapper">
             <Outlet />
           </div>
@@ -185,4 +220,5 @@ const BasicLayout = () => {
     </Layout>
   );
 };
+
 export default BasicLayout;

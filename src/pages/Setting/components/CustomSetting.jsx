@@ -37,12 +37,14 @@ const ListTwo = () => {
   const { color } = themeStore;
 
   const handleColorChange = throttle((value) => {
-    themeStore.setColor(value);
-  });
+    themeStore.setColor(value.toHexString() || "#1890ff");
+  }, 100);
 
   return (
     <List.Item
-      extra={<ColorPicker value={color} onChange={handleColorChange} />}
+      extra={
+        <ColorPicker showText value={color} onChange={handleColorChange} />
+      }
     >
       <List.Item.Meta title="主题色" description="页面风格配色设置" />
     </List.Item>
