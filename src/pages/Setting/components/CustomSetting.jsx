@@ -45,7 +45,7 @@ const ListTwo = () => {
   );
 };
 
-const App = () => {
+const CustomSetting = () => {
   return (
     <div className="custom-setting">
       <List itemLayout="horizontal">
@@ -56,4 +56,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default CustomSetting;

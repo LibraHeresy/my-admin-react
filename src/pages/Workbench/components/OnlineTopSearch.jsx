@@ -131,7 +131,7 @@ const chartOption = {
   ],
 };
 
-const App = () => {
+const OnlineTopSearch = () => {
   const chartRef = useRef(null);
 
   const renderChart = () => {
@@ -194,4 +194,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default OnlineTopSearch;

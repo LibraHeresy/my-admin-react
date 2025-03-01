@@ -2,7 +2,7 @@ import MyCard from "./MyCard.jsx";
 import { Progress } from "antd";
 import PropTypes from "prop-types";
 
-const App = ({ info = {} }) => {
+const TotalProgress = ({ info = {} }) => {
   return (
     <MyCard
       title="完成进度"
@@ -21,8 +21,8 @@ const App = ({ info = {} }) => {
   );
 };
 
-App.propTypes = {
+TotalProgress.propTypes = {
   info: PropTypes.object,
 };
 
-export default App;
+export default TotalProgress;

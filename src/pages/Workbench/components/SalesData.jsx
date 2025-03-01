@@ -47,7 +47,7 @@ const chartOption = {
     },
   ],
 };
-const App = React.forwardRef((_, ref) => {
+const SalesData = React.forwardRef((_, ref) => {
   const chartRef = useRef(null);
 
   const renderChart = () => {
@@ -81,6 +81,6 @@ const App = React.forwardRef((_, ref) => {
   );
 });
 
-App.displayName = "SalesData";
+SalesData.displayName = "SalesData";
 
-export default App;
+export default SalesData;

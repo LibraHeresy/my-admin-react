@@ -1,7 +1,7 @@
 import { Card, Result, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 
-const App = () => {
+const NoPermission = () => {
   const navigate = useNavigate();
 
   return (
@@ -26,4 +26,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default NoPermission;

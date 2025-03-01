@@ -55,7 +55,7 @@ const chartOption = {
   ],
 };
 
-const App = React.forwardRef(({ info = {} }, ref) => {
+const TotalVistors = React.forwardRef(({ info = {} }, ref) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -91,10 +91,10 @@ const App = React.forwardRef(({ info = {} }, ref) => {
   );
 });
 
-App.displayName = "TotalVistors";
+TotalVistors.displayName = "TotalVistors";
 
-App.propTypes = {
+TotalVistors.propTypes = {
   info: PropTypes.object,
 };
 
-export default App;
+export default TotalVistors;

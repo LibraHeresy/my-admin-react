@@ -60,7 +60,7 @@ const rules = {
   ],
 };
 
-const App = () => {
+const PersonInfo = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [info, setInfo] = useState(new CreateInfo());
   const [ruleForm] = Form.useForm();
@@ -161,4 +161,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default PersonInfo;

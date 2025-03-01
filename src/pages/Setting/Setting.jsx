@@ -5,7 +5,7 @@ import { UserOutlined, SettingOutlined } from "@ant-design/icons";
 import CustomSetting from "./components/CustomSetting";
 import PersonInfo from "./components/PersonInfo";
 
-const App = () => {
+const Setting = () => {
   const menus = [
     {
       key: "1",
@@ -54,4 +54,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Setting;

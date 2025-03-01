@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons";
 
-const App = ({ info = {} }) => {
+const TotalSales = ({ info = {} }) => {
   const salesIncreasePercent = useMemo(() => {
     return ((info.todaySales / info.totalSales) * 100).toFixed(2);
   }, [info]);
@@ -59,8 +59,8 @@ const App = ({ info = {} }) => {
   );
 };
 
-App.propTypes = {
+TotalSales.propTypes = {
   info: PropTypes.object,
 };
 
-export default App;
+export default TotalSales;

@@ -59,7 +59,7 @@ const chartOption = {
   ],
 };
 
-const App = () => {
+const ProportionOfSales = () => {
   const chartRef = useRef(null);
 
   const renderChart = () => {
@@ -100,4 +100,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default ProportionOfSales;

@@ -51,7 +51,7 @@ const chartOption = {
   ],
 };
 
-const App = React.forwardRef(({ info = {} }, ref) => {
+const TotalOrders = React.forwardRef(({ info = {} }, ref) => {
   const chartRef = useRef(null);
 
   const renderChart = () => {
@@ -88,10 +88,10 @@ const App = React.forwardRef(({ info = {} }, ref) => {
   );
 });
 
-App.displayName = "TotalOrders";
+TotalOrders.displayName = "TotalOrders";
 
-App.propTypes = {
+TotalOrders.propTypes = {
   info: PropTypes.object,
 };
 
-export default App;
+export default TotalOrders;

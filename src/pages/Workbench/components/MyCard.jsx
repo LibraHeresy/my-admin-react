@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
 import "./MyCard.less";
-const App = ({
+const MyCard = ({
   title = "这是标题",
   number = "0",
   desc = "这是描述",
@@ -32,7 +32,7 @@ const App = ({
   );
 };
 
-App.propTypes = {
+MyCard.propTypes = {
   title: PropTypes.string,
   number: PropTypes.string,
   desc: PropTypes.string,
@@ -42,4 +42,4 @@ App.propTypes = {
   descSlot: PropTypes.node,
 };
 
-export default App;
+export default MyCard;

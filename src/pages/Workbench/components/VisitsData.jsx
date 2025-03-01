@@ -47,7 +47,7 @@ const chartOption = {
     },
   ],
 };
-const App = React.forwardRef((_, ref) => {
+const VisitsData = React.forwardRef((_, ref) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -81,6 +81,6 @@ const App = React.forwardRef((_, ref) => {
   );
 });
 
-App.displayName = "VisitsData";
+VisitsData.displayName = "VisitsData";
 
-export default App;
+export default VisitsData;

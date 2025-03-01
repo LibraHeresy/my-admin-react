@@ -55,7 +55,7 @@ class CreateInfo {
   }
 }
 
-const App = () => {
+const Workbench = () => {
   const [info, setInfo] = useState(new CreateInfo());
   const [isLoading, setIsLoading] = useState(true);
   const refTotalVistors = useRef(null);
@@ -155,4 +155,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Workbench;
