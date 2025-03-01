@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 
-const App = () => {
+const PageView = () => {
   return <Outlet />;
 };
 
-export default App;
+export default PageView;

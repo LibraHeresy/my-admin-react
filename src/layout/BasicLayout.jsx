@@ -1,17 +1,23 @@
-import React, { useState } from "react";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Layout, Menu, theme } from "antd";
+import React, { useEffect, useState } from "react";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UserOutlined,
+  GlobalOutlined,
+} from "@ant-design/icons";
+import { Button, Layout, Menu, Dropdown } from "antd";
 const { Header, Sider, Content } = Layout;
 import "./BasicLayout.less";
 import Logo from "@/assets/react.svg";
 import myRoutes from "@/router/routes";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import useStore from "@/store/theme";
 
-const App = () => {
+const BasicLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  const themeStore = useStore();
+  const { t, i18n } = useTranslation();
   const getMenus = (routes) => {
     return routes
       .map((item) => {
@@ -19,7 +25,7 @@ const App = () => {
         let menu = {
           key: item.path,
           icon: item.icon?.render() || "",
-          label: item.name,
+          label: item.i18n ? t(item.i18n) : item.name,
         };
         if (item.children) {
           menu.children = getMenus(item.children);
@@ -45,6 +51,22 @@ const App = () => {
       navigate("/workbench", { replace: true });
     }
   }, [location, navigate]);
+
+  const handleChangeLanguage = (val) => {
+    themeStore.setLocalLanguage(val);
+  };
+
+  useEffect(() => {
+    if (themeStore.localLanguage) {
+      i18n.changeLanguage(themeStore.localLanguage);
+    }
+  }, [i18n, themeStore.localLanguage]);
+
+  // 退出登录
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <Layout className="basic-layout">
@@ -77,8 +99,10 @@ const App = () => {
       >
         <Header
           style={{
+            backgroundColor: "#fff",
             padding: 0,
-            background: colorBgContainer,
+            display: "flex",
+            justifyContent: "space-between",
           }}
         >
           <Button
@@ -91,6 +115,66 @@ const App = () => {
               height: 64,
             }}
           />
+          <div
+            style={{
+              marginRight: "36px",
+            }}
+          >
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    key: "1",
+                    label: (
+                      <Button type="link" onClick={() => navigate("/setting")}>
+                        个人设置
+                      </Button>
+                    ),
+                  },
+                  {
+                    key: "2",
+                    label: (
+                      <Button type="link" onClick={() => logout()}>
+                        退出登录
+                      </Button>
+                    ),
+                  },
+                ],
+              }}
+            >
+              <UserOutlined className="dropdown-icon" />
+            </Dropdown>
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    key: "1",
+                    label: (
+                      <Button
+                        type="link"
+                        onClick={() => handleChangeLanguage("zhCN")}
+                      >
+                        中文
+                      </Button>
+                    ),
+                  },
+                  {
+                    key: "2",
+                    label: (
+                      <Button
+                        type="link"
+                        onClick={() => handleChangeLanguage("enUS")}
+                      >
+                        English
+                      </Button>
+                    ),
+                  },
+                ],
+              }}
+            >
+              <GlobalOutlined className="dropdown-icon" />
+            </Dropdown>
+          </div>
         </Header>
         <Content className="ant-layout-content">
           <div className="content-wrapper">
@@ -101,4 +185,4 @@ const App = () => {
     </Layout>
   );
 };
-export default App;
+export default BasicLayout;

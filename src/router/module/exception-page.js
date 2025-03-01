@@ -6,13 +6,16 @@ const routes = [
     path: "/exception-page",
     name: "异常页",
     icon: WarningOutlined,
+    i18n: "exceptionPage",
     Component: lazy(() => import("../../layout/PageView.jsx")),
     children: [
       {
         index: true,
         path: "/exception-page/no-permission",
         name: "403",
-        Component: lazy(() => import("../../pages/ExceptionPage/NoPermission.jsx")),
+        Component: lazy(() =>
+          import("../../pages/ExceptionPage/NoPermission.jsx")
+        ),
       },
       {
         path: "/exception-page/not-found",
@@ -22,9 +25,11 @@ const routes = [
       {
         path: "/exception-page/server-error",
         name: "500",
-        Component: lazy(() => import("../../pages/ExceptionPage/ServerError.jsx")),
-      }
-    ]
+        Component: lazy(() =>
+          import("../../pages/ExceptionPage/ServerError.jsx")
+        ),
+      },
+    ],
   },
 ];
 

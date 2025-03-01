@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { Card, List, Descriptions } from "antd";
+import useStore from "@/store/order";
 
 const DetailPage = () => {
-  const [order] = useState({});
+  const { order } = useStore();
 
   return (
     <Card style={{ borderRadius: "10px", border: "none" }}>

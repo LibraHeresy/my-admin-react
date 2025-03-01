@@ -1,17 +1,12 @@
 import { useEffect } from "react";
 import { Form, Input, Button } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useStore } from "@/store/step";
+import useStore from "@/store/step";
 
 const StepForm2 = () => {
-  const navigate = useNavigate();
   const stepStore = useStore();
   const { step, transferInfo } = stepStore;
 
   const [form] = Form.useForm();
-  const ruleForm = {
-    paySecret: "123456",
-  };
 
   const layout = {
     labelCol: { span: 6 },
@@ -41,20 +36,18 @@ const StepForm2 = () => {
   const onSubmit = () => {
     form.validateFields().then(() => {
       stepStore.setStep(step + 1);
-      navigate("/step-form-3"); // 假设下一步是 StepForm3
     });
   };
 
   const prevStep = () => {
     stepStore.setStep(step - 1);
-    navigate("/step-form-1"); // 假设上一步是 StepForm1
   };
 
   return (
     <Form
       form={form}
-      layout="vertical"
-      initialValues={ruleForm}
+      layout="horizontal"
+      initialValues={{}}
       labelCol={layout.labelCol}
       wrapperCol={layout.wrapperCol}
       rules={rules}

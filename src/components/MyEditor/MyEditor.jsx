@@ -45,7 +45,7 @@ function MyEditor({ value, onInput }) {
 
   useEffect(() => {
     setHtml(value);
-  }, [value]);
+  }, []);
 
   return (
     <>
@@ -62,7 +62,7 @@ function MyEditor({ value, onInput }) {
           onCreated={setEditor}
           onChange={(editor) => setHtml(editor.getHtml())}
           mode="default"
-          style={{ height: "150px", overflowY: "hidden" }}
+          style={{ height: "300px", overflowY: "hidden" }}
         />
       </div>
     </>

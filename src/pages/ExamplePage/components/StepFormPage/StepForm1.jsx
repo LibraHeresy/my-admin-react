@@ -1,20 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Form, Select, Input, Button } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useStore } from "@/store/step";
+import useStore from "@/store/step";
 
 const StepForm1 = () => {
-  const navigate = useNavigate();
   const stepStore = useStore();
   const { step, transferInfo } = stepStore;
 
   const [form] = Form.useForm();
-  const [ruleForm, setRuleForm] = useState({
-    paymentAccount: undefined,
-    receiverAccount: "test@example.com",
-    receiver: "Alex",
-    transferAmount: "100.00",
-  });
 
   const layout = {
     labelCol: { span: 6 },
@@ -51,7 +43,6 @@ const StepForm1 = () => {
   useEffect(() => {
     if (transferInfo) {
       form.setFieldsValue(transferInfo);
-      setRuleForm(transferInfo);
     }
   }, [transferInfo, form]);
 
@@ -59,15 +50,19 @@ const StepForm1 = () => {
     form.validateFields().then((values) => {
       stepStore.setTransferInfo(values);
       stepStore.setStep(step + 1);
-      navigate("/step-form-2"); // 假设下一步是 StepForm2
     });
   };
 
   return (
     <Form
       form={form}
-      layout="vertical"
-      initialValues={ruleForm}
+      layout="horizontal"
+      initialValues={{
+        paymentAccount: "my-admin-vue3@alipay.com", // 设置一个默认值
+        receiverAccount: "test@example.com",
+        receiver: "Alex",
+        transferAmount: "100.00",
+      }}
       labelCol={layout.labelCol}
       wrapperCol={layout.wrapperCol}
       rules={rules}

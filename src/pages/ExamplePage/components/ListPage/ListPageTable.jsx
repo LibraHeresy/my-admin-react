@@ -1,22 +1,25 @@
-import React, { useState, useRef } from "react";
-import { Button, Popconfirm, Alert, Table, Typography } from "antd";
+import React, { useState, useRef, useEffect } from "react";
+import { Button, Popconfirm, Alert, Table } from "antd";
 import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import AddOrderModal from "./AddOrderModal";
 import { ListPageColumns } from "../../configs/config";
 import { ListPageData } from "../../configs/data";
+import useStore from "@/store/order";
 
 const ListPageTable = React.forwardRef((_, ref) => {
   const navigate = useNavigate();
   const refAddOrderModal = useRef(null);
 
   const [tableData, setTableData] = useState([...ListPageData]);
-  const [columns] = useState(ListPageColumns);
+  const [columns, setColumns] = useState(ListPageColumns);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const hasSelected = selectedRowKeys.length > 0;
   const message = `${selectedRowKeys.length || 0} 条数据已选择`;
+
+  const { setOrder } = useStore();
 
   const onSelectChange = (selectedKeys) => {
     setSelectedRowKeys(selectedKeys);
@@ -69,13 +72,30 @@ const ListPageTable = React.forwardRef((_, ref) => {
   }));
 
   const toDetailPage = (order) => {
-    navigate(`/detail/${order.orderNo}`);
+    setOrder(order);
+    navigate(`/example-page/detail-page/:${order.orderNo}`);
   };
 
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
   };
+
+  useEffect(() => {
+    const indexCol = columns.find((item) => item.dataIndex === "index");
+    const orderNoCol = columns.find((item) => item.dataIndex === "orderNo");
+
+    indexCol.render = (_, record, index) => index + 1;
+    orderNoCol.render = (_, record) => {
+      return (
+        <Button type="link" onClick={() => toDetailPage(record)}>
+          {record.orderNo}
+        </Button>
+      );
+    };
+
+    setColumns([...columns]);
+  }, []);
 
   return (
     <div>
@@ -117,24 +137,20 @@ const ListPageTable = React.forwardRef((_, ref) => {
         dataSource={tableData}
         loading={isLoading}
         rowKey="orderNo"
-      >
-        <Table.Column
-          title="序号"
-          dataIndex="index"
-          key="index"
-          render={(text, record, index) => index + 1}
-        />
-        <Table.Column
-          title="订单号"
-          dataIndex="orderNo"
-          key="orderNo"
-          render={(text, record) => (
-            <Typography.Link onClick={() => toDetailPage(record)}>
-              {text}
-            </Typography.Link>
-          )}
-        />
-      </Table>
+        bodyCell={(column, record, index) => {
+          if (column.dataIndex === "index") {
+            return <span>{index + 1}</span>;
+          }
+          if (column.dataIndex === "orderNo") {
+            return (
+              <Button onClick={() => toDetailPage(record)}>
+                {record.orderNo}
+              </Button>
+            );
+          }
+          return null;
+        }}
+      ></Table>
       <AddOrderModal
         ref={refAddOrderModal}
         onSubmit={(value) => {

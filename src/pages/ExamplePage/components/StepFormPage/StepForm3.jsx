@@ -1,6 +1,6 @@
 import { Result, Descriptions, Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useStore } from "@/store/step";
+import useStore from "@/store/step";
 
 const StepForm3 = () => {
   const navigate = useNavigate();
@@ -16,25 +16,31 @@ const StepForm3 = () => {
       <Result title="转账成功">
         <Descriptions column={1} bordered size="small">
           <Descriptions.Item label="付款账户">
-            {transferInfo.paymentAccount}
+            {transferInfo?.paymentAccount}
           </Descriptions.Item>
           <Descriptions.Item label="收款账户">
-            {transferInfo.receiverAccount}
+            {transferInfo?.receiverAccount}
           </Descriptions.Item>
           <Descriptions.Item label="收款人姓名">
-            {transferInfo.receiver}
+            {transferInfo?.receiver}
           </Descriptions.Item>
           <Descriptions.Item label="转账金额">
-            {transferInfo.transferAmount}
+            {transferInfo?.transferAmount}
           </Descriptions.Item>
         </Descriptions>
-        <Button
-          style={{ marginTop: "24px" }}
-          type="primary"
-          onClick={handleConfirm}
+        <div
+          style={{
+            textAlign: "center",
+          }}
         >
-          确定
-        </Button>
+          <Button
+            style={{ marginTop: "24px" }}
+            type="primary"
+            onClick={handleConfirm}
+          >
+            确定
+          </Button>
+        </div>
       </Result>
     </div>
   );

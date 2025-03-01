@@ -12,7 +12,11 @@ const SuccessPage = () => {
         title="恭喜你成功订购本商品！"
         subTitle="订单号: 20200808-1111 虚拟商品 5 分钟后到账"
         extra={[
-          <Button key="list" type="primary" onClick={() => navigate("/list")}>
+          <Button
+            key="list"
+            type="primary"
+            onClick={() => navigate("/example-page/list-page")}
+          >
             返回列表
           </Button>,
           <Button key="home" onClick={() => navigate("/workbench")}>

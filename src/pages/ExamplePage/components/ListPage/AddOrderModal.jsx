@@ -2,23 +2,8 @@ import { OrderTypeDict, OrderPayMentDict } from "../../configs/dict";
 import MyEditor from "@/components/MyEditor/MyEditor.jsx";
 import moment from "moment";
 import { Form, Modal, Button, Select, Input } from "antd";
-import React, { useState } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import PropTypes from "prop-types";
-
-class CreateRuleForm {
-  constructor() {
-    // 订单金额
-    this.orderAmount = undefined;
-    // 订单类型
-    this.orderType = undefined;
-    // 工作人员
-    this.worker = "";
-    // 支付渠道
-    this.orderPayment = undefined;
-    // 备注
-    this.desc = "";
-  }
-}
 
 const layout = {
   labelCol: { span: 4 },
@@ -63,7 +48,7 @@ const rules = {
   ],
 };
 
-const AddOrderModal = React.forwardRef(({ onSubmit }, ref) => {
+const AddOrderModal = forwardRef(({ onSubmit }, ref) => {
   const [visible, setVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [ruleForm] = Form.useForm();
@@ -75,9 +60,6 @@ const AddOrderModal = React.forwardRef(({ onSubmit }, ref) => {
   const handleCancel = () => {
     setVisible(false);
     ruleForm.resetFields();
-    ruleForm.setFieldsValue({
-      ...new CreateRuleForm(),
-    });
   };
 
   const handleOk = () => {
@@ -104,7 +86,7 @@ const AddOrderModal = React.forwardRef(({ onSubmit }, ref) => {
     console.log("Failed:", errorInfo);
   };
 
-  React.useImperativeHandle(ref, () => ({
+  useImperativeHandle(ref, () => ({
     showModal,
   }));
 
@@ -137,7 +119,13 @@ const AddOrderModal = React.forwardRef(({ onSubmit }, ref) => {
         labelCol={layout.labelCol}
         wrapperCol={layout.wrapperCol}
         onFinishFailed={onFinishFailed}
-        initialValues={new CreateRuleForm()}
+        initialValues={{
+          orderAmount: undefined,
+          orderType: undefined,
+          worker: "",
+          orderPayment: undefined,
+          desc: "",
+        }}
       >
         <Form.Item
           label="订单金额"
@@ -172,10 +160,12 @@ const AddOrderModal = React.forwardRef(({ onSubmit }, ref) => {
           />
         </Form.Item>
         <Form.Item label="备注" name="desc" rules={rules.desc}>
-          <MyEditor
-            value={ruleForm.getFieldValue("desc")}
-            onInput={(value) => ruleForm.setFieldsValue({ desc: value })}
-          />
+          {visible && (
+            <MyEditor
+              value={ruleForm.getFieldValue("desc")}
+              onInput={(value) => ruleForm.setFieldsValue({ desc: value })}
+            />
+          )}
         </Form.Item>
       </Form>
     </Modal>

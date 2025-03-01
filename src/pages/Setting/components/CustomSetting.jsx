@@ -1,15 +1,17 @@
 import { List, Switch } from "antd";
-import { useState } from "react";
 import { ColorPicker } from "antd";
-import { throttle } from "lodash"
+import { throttle } from "lodash";
+import useStore from "@/store/theme";
 
 const ListOne = () => {
-  const [theme, setTheme] = useState("dark");
+  const themeStore = useStore();
+  const { theme } = themeStore;
+
   const handleSwitchChange = (checked) => {
     if (checked) {
-      setTheme("dark");
+      themeStore.setTheme("dark");
     } else {
-      setTheme("light");
+      themeStore.setTheme("light");
     }
   };
 
@@ -31,9 +33,11 @@ const ListOne = () => {
 };
 
 const ListTwo = () => {
-  const [color, setColor] = useState("#ffffff");
+  const themeStore = useStore();
+  const { color } = themeStore;
+
   const handleColorChange = throttle((value) => {
-    setColor(value);
+    themeStore.setColor(value);
   });
 
   return (

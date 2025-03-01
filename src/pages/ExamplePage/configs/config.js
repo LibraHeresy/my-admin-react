@@ -2,12 +2,10 @@ export const ListPageColumns = [
   {
     title: "序号",
     dataIndex: "index",
-    scopedSlots: { customRender: "index" },
   },
   {
     title: "订单号",
     dataIndex: "orderNo",
-    scopedSlots: { customRender: "orderNo" },
   },
   {
     title: "订单金额",
