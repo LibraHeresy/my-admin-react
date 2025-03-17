@@ -11,6 +11,7 @@ const StepFormPage = () => {
   const { step } = stepStore;
 
   useEffect(() => {
+    console.log("stepStore", stepStore);
     stepStore.setTransferInfo(null);
     stepStore.setStep(0);
   }, []);
